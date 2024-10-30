@@ -9,9 +9,11 @@
 .page-leave-active {
   transition: all 0.4s;
 }
-.page-enter-from,
+.page-enter-from {
+  opacity: 0;
+}
+
 .page-leave-to {
   opacity: 0;
-  transform: translateY(100%);
 }
 </style>

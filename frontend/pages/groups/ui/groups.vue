@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { useSupabase } from "~/supabase";
 
+const router = useRouter();
 const { supabase } = useSupabase();
 
 const getMuscleGroups = async () => {
@@ -12,13 +13,15 @@ const getMuscleGroups = async () => {
 const { data, error } = await useAsyncData(() => getMuscleGroups());
 
 const muscleGroups = computed(() => (data.value ? data.value.data : []));
+
+const toGroupPage = (groupId: number) => {
+  router.push(`groups/${groupId}`);
+};
 </script>
 
 <template>
   <PageTransition>
-    <SearchInput />
-
-    <h2 class="text-2xl font-bold mt-10 text-blue-400">Группы мышц</h2>
+    <h2 class="text-2xl font-bold text-blue-400">Группы мышц</h2>
 
     <p class="leading-6 mt-2">
       В данном разделе вы сможете найти упражнение для необходимой вам
@@ -26,7 +29,13 @@ const muscleGroups = computed(() => (data.value ? data.value.data : []));
     </p>
 
     <section v-if="!error" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <MuscleGroupCard v-for="item in muscleGroups" :name="item.name" />
+      <button
+        v-for="item in muscleGroups"
+        :key="item.id"
+        @click="toGroupPage(item.id)"
+      >
+        <MuscleGroupCard :name="item.name" />
+      </button>
     </section>
 
     <section v-else>

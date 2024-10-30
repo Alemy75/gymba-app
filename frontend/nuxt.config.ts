@@ -2,7 +2,12 @@
 export default defineNuxtConfig({
   compatibilityDate: "2024-04-03",
   devtools: { enabled: true },
-  modules: ["@nuxt/eslint", "@nuxtjs/google-fonts", "@nuxt/icon"],
+  modules: [
+    "@nuxt/eslint",
+    "@nuxtjs/google-fonts",
+    "@nuxt/icon",
+    "@vueuse/nuxt"
+  ],
   googleFonts: {
     families: {
       Roboto: true
