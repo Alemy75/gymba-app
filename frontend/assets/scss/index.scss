@@ -1,5 +1,2 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@import "./global";
+@use "./tailwind";
+@use "./global";
