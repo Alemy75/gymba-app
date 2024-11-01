@@ -26,6 +26,7 @@ jobs:
           cd frontend
           echo "SUPABASE_PROJECT_URL=${{ secrets.SUPABASE_PROJECT_URL }}" >> .env
           echo "SUPABASE_API_KEY=${{ secrets.SUPABASE_API_KEY }}" >> .env
+          cd ../
 
       - name: Build Docker images with docker-compose
         run: |
