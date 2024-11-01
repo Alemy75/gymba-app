@@ -8,7 +8,7 @@ const toGroups = () => {
 
 <template>
   <PageTransition>
-    <button @click="toGroups">К группам</button>
+    <button @click="toGroups">К группам!</button>
   </PageTransition>
 </template>
 
