@@ -8,11 +8,11 @@
       <h2 class="text-xl text-white font-bold">{{ name }}</h2>
     </div>
 
-    <img
+    <!-- <img
       class="w-4/12 shadow-2xl aspect-square rounded-full object-cover"
       src="https://yt3.googleusercontent.com/9rAG7df2Ww1rhxDsdj12PWLIxHK71MR6KEotYTvoZMa6l0b2okCm_zBKcI7bdS3saOFamjBs=s900-c-k-c0x00ffffff-no-rj"
       alt=""
-    />
+    /> -->
   </div>
 </template>
 
