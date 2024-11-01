@@ -30,7 +30,10 @@ jobs:
 
       - name: Save Docker images
         run: |
-          docker save $(docker-compose -f docker-compose.yml images -q) -o docker-images.tar
+          IMAGES=$(docker-compose -f docker-compose.yml images -q)
+          for IMAGE in $IMAGES; do
+            docker save $IMAGE -o ${IMAGE//:/_}.tar
+          done
 
       - name: Upload Docker images
         uses: actions/upload-artifact@v4
