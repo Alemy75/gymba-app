@@ -13,10 +13,6 @@ const getMuscleGroups = async () => {
 const { data, error } = await useAsyncData(() => getMuscleGroups());
 
 const muscleGroups = computed(() => (data.value ? data.value.data : []));
-
-const toGroupPage = (groupId: number) => {
-  router.push(`groups/${groupId}`);
-};
 </script>
 
 <template>
@@ -29,13 +25,13 @@ const toGroupPage = (groupId: number) => {
     </p>
 
     <section v-if="!error" class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-      <button
+      <NuxtLink
         v-for="item in muscleGroups"
         :key="item.id"
-        @click="toGroupPage(item.id)"
+        :to="`groups/${item.id}`"
       >
-        <MuscleGroupCard :name="item.name" />
-      </button>
+        <TypeCard :type="'Группа'" :name="item.name" />
+      </NuxtLink>
     </section>
 
     <section v-else>

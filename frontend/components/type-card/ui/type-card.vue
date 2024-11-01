@@ -1,9 +1,10 @@
 <template>
   <div
     class="px-4 py-4 text-left rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-500 border-2 border-blue-200 transition-all hover:shadow-lg transform hover:translate-y-[-2px] flex items-start gap-2 justify-between"
-  >
+    :class="{'from-purple-500': type === 'Мышца'}"
+    >
     <div>
-      <p class="text-white text-md opacity-50">Группа</p>
+      <p class="text-white text-md opacity-50">{{ type }}</p>
 
       <h2 class="text-xl text-white font-bold">{{ name }}</h2>
     </div>
@@ -18,10 +19,11 @@
 
 <script setup lang="ts">
 const props = defineProps<{
+  type: string;
   name: string;
 }>();
 
-const { name } = toRefs(props);
+const { type, name } = toRefs(props);
 </script>
 
 <style scoped></style>

@@ -15,16 +15,36 @@ const getMuscleGroup = async () => {
   return data;
 };
 
-const { data, error } = await useAsyncData(() => getMuscleGroup());
+const getMuscles = async () => {
+  const data = await supabase
+    .from("muscle")
+    .select()
+    .eq("groupId", groupId.value);
+
+  return data;
+};
+
+const { data: groupsData, error: groupsError } = await useAsyncData(() =>
+  getMuscleGroup()
+);
 
 const group = computed(() =>
-  data.value && data.value.data ? data.value.data[0] : null
+  groupsData.value && groupsData.value.data ? groupsData.value.data[0] : null
+);
+
+const { data: musclesData, error: musclesError } = await useAsyncData(() =>
+  getMuscles()
+);
+
+const muscles = computed(() =>
+  musclesData.value ? musclesData.value.data : []
 );
 </script>
 
 <template>
   <PageTransition>
-    <div v-if="!error && group">
+    <div v-if="!groupsError && group">
+      <!-- Хлебные крошки -->
       <div class="flex items-center gap-1">
         <NuxtLink
           class="opacity-20 transition-opacity hover:opacity-100"
@@ -34,6 +54,26 @@ const group = computed(() =>
 
         <h1>/ {{ group.name }}</h1>
       </div>
+
+      <p class="mt-2 opacity-20">
+        Здесь перечислены мышци, относящиеся к группе "{{ group.name }}"
+      </p>
+
+      <!-- Список мышц -->
+      <section
+        v-if="!musclesError"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
+      >
+        <NuxtLink v-for="item in muscles" :key="item.name">
+          <TypeCard :type="'Мышца'" :name="item.name" />
+        </NuxtLink>
+      </section>
+
+      <section v-else>
+        <p class="leading-6 mt-2 opacity-20">
+          Ошибка получения данных. Попробуйте попытку позже
+        </p>
+      </section>
     </div>
   </PageTransition>
 </template>
