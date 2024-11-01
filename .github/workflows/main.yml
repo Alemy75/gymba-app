@@ -21,4 +21,4 @@ jobs:
             git pull origin main
             docker-compose down
             docker image prune -f
-            docker-compose up --force-rebuild --build -d
+            docker-compose up --force-recreate --build -d
