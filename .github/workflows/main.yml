@@ -11,7 +11,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
 
       - name: Install Docker Compose
         run: |
@@ -39,7 +42,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: docker-images
-          path: docker-images.tar
+          path: ./*.tar
 
   deploy:
     runs-on: ubuntu-latest
@@ -62,7 +65,9 @@ jobs:
           script: |
             cd ~/gymba-app
             git pull origin master
-            docker load -i docker-images.tar
+            for IMAGE in *.tar; do
+              docker load -i $IMAGE
+            done
             docker-compose down
             docker image prune -f
             docker-compose up -d
