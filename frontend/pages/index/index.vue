@@ -1,9 +1,7 @@
 <script lang="ts" setup>
-const router = useRouter();
-
-const toGroups = () => {
-  router.push("/groups");
-};
+definePageMeta({
+  middleware: ["base-to-groups"]
+});
 </script>
 
 <template>

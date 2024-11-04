@@ -28,7 +28,7 @@ const muscleGroups = computed(() => (data.value ? data.value.data : []));
       <NuxtLink
         v-for="item in muscleGroups"
         :key="item.id"
-        :to="`groups/${item.id}`"
+        :to="`/groups/${item.id}`"
       >
         <TypeCard :type="'Группа'" :name="item.name" />
       </NuxtLink>

@@ -48,7 +48,7 @@ const muscles = computed(() =>
       <div class="flex items-center gap-1">
         <NuxtLink
           class="opacity-20 transition-opacity hover:opacity-100"
-          :to="{ name: `groups` }"
+          :to="`/groups`"
           >Группы мышц
         </NuxtLink>
 
@@ -64,7 +64,11 @@ const muscles = computed(() =>
         v-if="!musclesError"
         class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4"
       >
-        <NuxtLink v-for="item in muscles" :key="item.name">
+        <NuxtLink
+          v-for="item in muscles"
+          :key="item.name"
+          :to="`/groups/${groupId}/muscles/${item.id}`"
+        >
           <TypeCard :type="'Мышца'" :name="item.name" />
         </NuxtLink>
       </section>
