@@ -56,7 +56,7 @@ const { data: exerciseData, error: exerciseError } = await useAsyncData(() =>
 );
 
 const exercise = computed(() =>
-  exerciseData.value && muscleData.value.data
+  exerciseData.value && exerciseData.value.data
     ? exerciseData.value.data[0]
     : null
 );
@@ -89,6 +89,16 @@ const exercise = computed(() =>
 
         <h1 class="whitespace-nowrap text-xs">/ {{ exercise.name }}</h1>
       </div>
+
+      <section v-if="exercise.video" class="mt-4">
+        <iframe
+          :src="exercise.video"
+          class="w-full aspect-video rounded-2xl border-2 border-blue-200"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
+          frameborder="0"
+          allowfullscreen
+        ></iframe>
+      </section>
 
       <p class="mt-4 whitespace-pre-wrap">
         {{ exercise.content }}
