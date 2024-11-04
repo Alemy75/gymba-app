@@ -1,4 +1,4 @@
-<script lang="ts" setup>
+<script setup lang="ts">
 import { useSupabase } from "~/supabase";
 import { useToNumber } from "#imports";
 
@@ -6,6 +6,7 @@ const route = useRoute();
 const { supabase } = useSupabase();
 const groupId = useToNumber(() => +route.params.groupId);
 const muscleId = useToNumber(() => +route.params.muscleId);
+const exerciseId = useToNumber(() => +route.params.exerciseId);
 
 const getMuscleGroup = async () => {
   const data = await supabase
@@ -22,11 +23,11 @@ const getMuscle = async () => {
   return data;
 };
 
-const getExercises = async () => {
+const getExercise = async () => {
   const data = await supabase
     .from("exercise")
     .select()
-    .eq("muscleId", muscleId.value);
+    .eq("id", exerciseId.value);
 
   return data;
 };
@@ -49,19 +50,21 @@ const muscle = computed(() =>
   muscleData.value && muscleData.value.data ? muscleData.value.data[0] : null
 );
 
-// Упражнения
-const { data: exercisesData, error: exercisesError } = await useAsyncData(() =>
-  getExercises()
+// Упражнение
+const { data: exerciseData, error: exerciseError } = await useAsyncData(() =>
+  getExercise()
 );
 
-const exercises = computed(() =>
-  exercisesData.value ? exercisesData.value.data : []
+const exercise = computed(() =>
+  exerciseData.value && muscleData.value.data
+    ? exerciseData.value.data[0]
+    : null
 );
 </script>
 
 <template>
   <PageTransition>
-    <div v-if="group && muscle && exercises">
+    <div v-if="group && muscle && exercise">
       <!-- Хлебные крошки -->
       <div class="flex items-center gap-1">
         <NuxtLink
@@ -77,37 +80,21 @@ const exercises = computed(() =>
           / {{ group.name }}
         </NuxtLink>
 
-        <h1 class="whitespace-nowrap text-xs">/ {{ muscle.name }}</h1>
+        <NuxtLink
+          class="opacity-20 transition-opacity hover:opacity-100 whitespace-nowrap text-xs"
+          :to="`/groups/${groupId}/muscles/${muscleId}`"
+        >
+          / {{ muscle.name }}
+        </NuxtLink>
+
+        <h1 class="whitespace-nowrap text-xs">/ {{ exercise.name }}</h1>
       </div>
 
-      <p class="mt-4">
-        {{ muscle.description }}
+      <p class="mt-4 whitespace-pre-wrap">
+        {{ exercise.content }}
       </p>
-
-      <p class="mt-4 opacity-20">
-        Здесь перечислены упранения, относящиеся к мышце "{{ muscle.name }}"
-      </p>
-
-      <!-- Список мышц -->
-      <section v-if="exercisesError">
-        <p class="leading-6 mt-2 opacity-20">
-          Ошибка получения данных. Попробуйте попытку позже
-        </p>
-      </section>
-
-      <section v-else class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <NuxtLink
-          v-for="item in exercises"
-          :key="item.name"
-          :to="`/groups/${groupId}/muscles/${muscleId}/exercises/${item.id}`"
-        >
-          <TypeCard :type="'Упражнение'" :name="item.name" />
-        </NuxtLink>
-      </section>
     </div>
   </PageTransition>
 </template>
-
-<script setup lang="ts"></script>
 
 <style scoped></style>

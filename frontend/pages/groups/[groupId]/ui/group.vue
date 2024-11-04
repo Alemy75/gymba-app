@@ -47,12 +47,12 @@ const muscles = computed(() =>
       <!-- Хлебные крошки -->
       <div class="flex items-center gap-1">
         <NuxtLink
-          class="opacity-20 transition-opacity hover:opacity-100"
+          class="opacity-20 transition-opacity hover:opacity-100 whitespace-nowrap text-xs"
           :to="`/groups`"
           >Группы мышц
         </NuxtLink>
 
-        <h1>/ {{ group.name }}</h1>
+        <h1 class="whitespace-nowrap text-xs">/ {{ group.name }}</h1>
       </div>
 
       <p class="mt-2 opacity-20">
