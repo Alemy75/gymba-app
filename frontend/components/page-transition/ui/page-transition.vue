@@ -7,7 +7,7 @@
 <style scoped lang="scss">
 .page-enter-active,
 .page-leave-active {
-  transition: all 0.4s;
+  transition: all 0.15s;
 }
 .page-enter-from {
   opacity: 0;
