@@ -93,7 +93,7 @@ const exercise = computed(() =>
       <section v-if="exercise.video" class="mt-4">
         <iframe
           :src="exercise.video"
-          class="w-full aspect-video rounded-2xl border-2 border-blue-200"
+          class="w-full aspect-video rounded-2xl"
           allow="autoplay; encrypted-media; fullscreen; picture-in-picture; screen-wake-lock;"
           frameborder="0"
           allowfullscreen
